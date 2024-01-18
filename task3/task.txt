@@ -1,0 +1,25 @@
+10eca968 <Screensaver_Sleep_Activate>:
+10eca968 b530 push {r4,r5,lr}
+10eca96a 4d13 ldr r5, [$10eca9b8]
+10eca96c 1c0c add r4, r1, #0x0 
+10eca96e 2117 mov r1, #0x17
+10eca970 1c28 add r0, r5, #0x0              
+10eca972 f1a1 bl $1106bbdc
+10eca974 f933
+10eca976 2000 mov r0, #0x0                  <- значение регистра r0 0x0 
+10eca978 2117 mov r1, #0x17   
+10eca97a 6001 str r1, [r0, #0x0]            <- запись в память по адресу из r0 (0x0), что может привести к крашу 
+10eca97c f000 bl $10ecb274
+10eca97e fc7a
+10eca980 2800 cmp r0, #0x0                  
+10eca982 d116 bne $10eca9b2                 
+10eca984 f1df bl $110aa820
+10eca986 ff4c
+10eca988 2800 cmp r0, #0x0
+Dump of registers at crash point:
+r0 0x00000000 r1 0x00000017 r2 0x00000000 r3 0x00000013
+r4 0x00000000 r5 0x11b8c0c4 r6 0x00000000 r7 0x11d89560
+r8 0xffffffff r9 0xffffffff r10 0x00000000 r11 0x00000000
+r12 0x55555555
+
+Предположительно, стоит убрать 9 строку, чтобы избежать записи в нулевую память
